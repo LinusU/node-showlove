@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html manifest="cache.php">
+<head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <link href="icon-114.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+    <link href="icon-120.png" sizes="120x120" rel="apple-touch-icon-precomposed">
+    <style type="text/css">
+        @font-face {
+            font-family: 'Ubuntu';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Ubuntu Bold'), local('Ubuntu-Bold'), url(ubuntu.woff) format('woff');
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        div {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            right: 24px;
+            bottom: 24px;
+        }
+        table {
+            font-family: 'Ubuntu' sans-serif;
+            color: {{color-fill}};
+            -webkit-text-stroke: 1px {{color-stroke}};
+            font-size: 24pt;
+            line-height: 48px;
+            width: 100%;
+            height: 100%;
+        }
+        td {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div><table><tr><td></td></tr></table></div>
+
+    <script type="text/javascript" src="deviceshake.js"></script>
+    <script type="text/javascript">
+        var phrases = {{phrases}};
+        var current = 0;
+        var randomPhrase = function () {
+         var next = Math.floor(Math.random() * (phrases.length - 1));
+           if(next >= current) { next++; }
+           current = next;
+           return phrases[current];
+        };
+        window.addEventListener('deviceshake', function () {
+            document.querySelector('td').innerText = randomPhrase();
+        }, false);
+    </script>
+
+</body>
+</html>

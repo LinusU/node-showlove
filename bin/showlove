@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var showlove = require('..');
+var package = require('../package');
+
+var argv = process.argv;
+
+if (~argv.indexOf('--version')) {
+  console.log(package.version);
+  process.exit(0);
+}
+
+if (~argv.indexOf('--help') || argv.length !== 3) {
+  console.log([
+    'Usage: showlove <json-path>'
+  ].join('\n'));
+  process.exit(0);
+}
+
+var path = argv[2];
+
+fs.readFile(path, function (err, buffer) {
+  if (err) { throw err; }
+
+  var opts = JSON.parse(buffer.toString());
+  var server = showlove(opts);
+
+  server.listen(opts.port, function () {
+    console.log('http://localhost:' + opts.port);
+  });
+
+});
