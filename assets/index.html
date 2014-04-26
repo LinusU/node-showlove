@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="cache.php">
+<html manifest="cache.appcache">
 <head>
     <meta charset="utf-8" />
     <title>{{title}}</title>
@@ -46,6 +46,24 @@
 <body>
 
     <div><table><tr><td></td></tr></table></div>
+
+    <script type="text/javascript">
+      function handleAppCache() {
+        if (applicationCache == undefined) {
+          return;
+        }
+
+        if (applicationCache.status == applicationCache.UPDATEREADY) {
+          applicationCache.swapCache();
+          location.reload();
+          return;
+        }
+
+        applicationCache.addEventListener('updateready', handleAppCache, false);
+      }
+
+      handleAppCache();
+    </script>
 
     <script type="text/javascript" src="deviceshake.js"></script>
     <script type="text/javascript">
